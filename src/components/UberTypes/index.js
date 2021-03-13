@@ -1,23 +1,26 @@
 import React from "react"
 import styles from "./styles";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, Dimensions } from "react-native";
 import UberTypeRow from "../UberTypeRow"
 
 import typesData from "../../assets/data/types"
 
-const UberTypes = (props) => {
-    const confirm = () => {
-        console.warn('confirm');
-    }
-    return (
-        <View>
-            {typesData.map(type => <UberTypeRow type={type} />)}
+const UberTypes = ({ typeState, onSubmit }) => {
+    const [selectedType, setSelectedType] = typeState;
 
-            <Pressable onPress={confirm} style={{ width: '100%', backgroundColor: 'black', padding: 10, margin: 10, alignItems: 'center' }}>
-                <Text style={{ color: 'white', fontWeight: 'bold' }}>
-                    Confirm Uber
+    return (
+        <View style={{ flex: 1 }}>
+            <View style={{ flex: 5 }}>
+                {typesData.map(type => <UberTypeRow type={type} key={type.id} isSelected={type.type === selectedType} onPress={() => setSelectedType(type.type)} />)}
+            </View>
+            <View style={{ flex: 1 }}>
+                <Pressable onPress={onSubmit} style={{ backgroundColor: 'black', padding: 10, margin: 10, alignItems: 'center' }}>
+                    <Text style={{ color: 'white', fontWeight: 'bold' }}>
+                        Confirm Uber
                 </Text>
-            </Pressable>
+                </Pressable>
+            </View>
+
         </View>
     );
 };
